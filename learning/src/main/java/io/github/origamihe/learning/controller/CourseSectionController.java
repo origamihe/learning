@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class CourseSectionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> createSection(@Valid @RequestBody CreateSectionRequest request) {
         CourseSection section = CourseSection.builder()
                 .courseId(request.getCourseId())
@@ -48,6 +50,7 @@ public class CourseSectionController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> updateSection(@PathVariable UUID id, @RequestBody CourseSection section) {
         section.setId(id);
         try {
@@ -59,12 +62,14 @@ public class CourseSectionController {
     }
 
     @PostMapping("/reorder")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> reorderSections(@RequestBody ReorderRequest request) {
         sectionService.reorderSections(request.getCourseId(), request.getSectionIds());
         return ResponseEntity.ok(Map.of("message", "排序成功"));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> deleteSection(@PathVariable UUID id) {
         sectionService.deleteSection(id);
         return ResponseEntity.ok(Map.of("message", "删除成功"));

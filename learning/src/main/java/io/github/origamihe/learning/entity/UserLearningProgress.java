@@ -1,7 +1,7 @@
 package io.github.origamihe.learning.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import io.github.origamihe.learning.handler.StringArrayTypeHandler;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -30,7 +30,7 @@ public class UserLearningProgress {
 
     private BigDecimal progress = BigDecimal.ZERO;
 
-    @TableField(value = "completed_sections", typeHandler = JacksonTypeHandler.class)
+    @TableField(value = "completed_sections", typeHandler = StringArrayTypeHandler.class)
     private String completedSections;
 
     @TableField("last_accessed")

@@ -40,22 +40,22 @@ service.interceptors.response.use(
 
 export default service
 
-export function request<T = any>(config: AxiosRequestConfig): Promise<T> {
+export function request<T = unknown>(config: AxiosRequestConfig): Promise<T> {
   return service(config) as Promise<T>
 }
 
-export function get<T = any>(url: string, params?: any): Promise<T> {
+export function get<T = unknown>(url: string, params?: Record<string, unknown>): Promise<T> {
   return service.get(url, { params })
 }
 
-export function post<T = any>(url: string, data?: any, config?: any): Promise<T> {
+export function post<T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
   return service.post(url, data, config)
 }
 
-export function put<T = any>(url: string, data?: any, config?: any): Promise<T> {
+export function put<T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
   return service.put(url, data, config)
 }
 
-export function del<T = any>(url: string): Promise<T> {
+export function del<T = unknown>(url: string): Promise<T> {
   return service.delete(url)
 }

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,6 +73,7 @@ public class QuestionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> createQuestion(@Valid @RequestBody CreateQuestionRequest request) {
         Question question = Question.builder()
                 .courseId(request.getCourseId())
@@ -89,6 +91,7 @@ public class QuestionController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> updateQuestion(@PathVariable UUID id, @RequestBody Question question) {
         question.setId(id);
         try {
@@ -100,6 +103,7 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> deleteQuestion(@PathVariable UUID id) {
         questionService.softDeleteQuestion(id);
         return ResponseEntity.ok(Map.of("message", "删除成功"));

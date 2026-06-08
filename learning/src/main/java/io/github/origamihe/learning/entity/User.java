@@ -1,6 +1,7 @@
 package io.github.origamihe.learning.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import io.github.origamihe.learning.common.BaseEntity;
 import io.github.origamihe.learning.enums.UserRole;
 import io.github.origamihe.learning.enums.UserStatus;
@@ -44,7 +45,7 @@ public class User extends BaseEntity {
 
     private UserStatus status = UserStatus.ACTIVE;
 
-    @TableField(typeHandler = com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler.class)
+    @TableField(value = "preferences", typeHandler = JacksonTypeHandler.class)
     private String preferences;
 
     @TableLogic

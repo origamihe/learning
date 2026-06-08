@@ -3,6 +3,7 @@ package io.github.origamihe.learning.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import io.github.origamihe.learning.common.BaseEntity;
+import io.github.origamihe.learning.handler.StringArrayTypeHandler;
 import io.github.origamihe.learning.enums.QuestionType;
 import lombok.*;
 
@@ -40,7 +41,7 @@ public class Question extends BaseEntity {
 
     private Integer difficulty;
 
-    @TableField(value = "tags", typeHandler = JacksonTypeHandler.class)
+    @TableField(value = "tags", typeHandler = StringArrayTypeHandler.class)
     private String tags;
 
     @TableField(value = "meta", typeHandler = JacksonTypeHandler.class)

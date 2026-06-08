@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class ExamController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> createExam(@Valid @RequestBody CreateExamRequest request) {
         Exam exam = Exam.builder()
                 .title(request.getTitle())
@@ -61,6 +63,7 @@ public class ExamController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> updateExam(@PathVariable UUID id, @RequestBody Exam exam) {
         exam.setId(id);
         examService.updateById(exam);
@@ -68,6 +71,7 @@ public class ExamController {
     }
 
     @PostMapping("/{id}/publish")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> publishExam(@PathVariable UUID id) {
         try {
             examService.publishExam(id);
@@ -78,6 +82,7 @@ public class ExamController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     public ResponseEntity<?> deleteExam(@PathVariable UUID id) {
         examService.removeById(id);
         return ResponseEntity.ok(Map.of("message", "删除成功"));
